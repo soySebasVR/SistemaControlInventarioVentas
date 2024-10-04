@@ -20,7 +20,9 @@ public class TransaccionNuevoProducto extends Transaccion {
             System.out.println("\nQue desea hacer?");
             System.out.println("1. Agregar productos");
             System.out.println("2. Quitar producto");
-            System.out.println("3. Salir");
+            System.out.println("3. Imprimir productos");
+            System.out.println("4. Guardar productos y salir");
+            System.out.println("3. Salir sin guardar productos");
             opcion = sc.nextLine();
 
             if (opcion.equals("1")) {
@@ -54,7 +56,11 @@ public class TransaccionNuevoProducto extends Transaccion {
                     System.out.println("Error al ingresar cantidad");
                 }
             } else if (opcion.equals("3")) {
+                printProductos();
+            } else if (opcion.equals("4")) {
                 break;
+            } else if (opcion.equals("5")) {
+                return;
             } else {
                 System.out.println("Opcion no valida");
             }
