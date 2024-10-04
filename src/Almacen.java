@@ -23,6 +23,15 @@ public class Almacen {
         throw new NotFoundProductoException(nombre);
     }
 
+    public void updateProductoPrecio(Producto p) {
+        for (Producto producto : productos) {
+            if (producto.getNombre().equals(p.getNombre())) {
+                producto.setPrecio(p.getPrecio());
+                return;
+            }
+        }
+    }
+
     public static Almacen getFromDB() throws FileNotFoundException {
         Almacen tienda = new Almacen();
         File dbFile = new File("db/db.csv");
@@ -81,6 +90,12 @@ public class Almacen {
             if (!addFlag) {
                 productos.add(pa);
             }
+        }
+    }
+
+    public void printProductos() {
+        for (Producto p : productos) {
+            System.out.println(p.getNombre() + " | " + p.getCantidad() + " | " + p.getPrecio());
         }
     }
 }
