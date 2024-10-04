@@ -30,11 +30,11 @@ public class App {
                     Venta(sc, almacen);
                     TimeUnit.SECONDS.sleep(1);
                 } else if (opcion.equals("2")) {
-                    //NuevoProducto(sc);
+                    NuevoProducto(sc, almacen);
                     TimeUnit.SECONDS.sleep(1);
                 } else if (opcion.equals("3")) {
                     System.out.println("Muchas Gracias");
-                    System.exit(0);
+                    break;
                 } else {
                     System.out.println("Número ingresado no es válido");
                 }
@@ -42,8 +42,13 @@ public class App {
         }
     }
 
-    public static void Venta(Scanner sc, Almacen tienda) {
-        TransaccionVenta transaccion = new TransaccionVenta(tienda);
+    public static void Venta(Scanner sc, Almacen almacen) {
+        TransaccionVenta transaccion = new TransaccionVenta(almacen);
+        transaccion.iniciarTransaccion(sc);
+    }
+
+    public static void NuevoProducto(Scanner sc, Almacen almacen) {
+        TransaccionNuevoProducto transaccion = new TransaccionNuevoProducto(almacen);
         transaccion.iniciarTransaccion(sc);
     }
 }

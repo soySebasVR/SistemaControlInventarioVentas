@@ -64,4 +64,22 @@ public class Almacen {
             }
         }
     }
+
+    public void addProductos(ArrayList<Producto> prodsAdd) {
+        boolean addFlag = false;
+
+        for (Producto pa : prodsAdd) {
+            addFlag = false;
+            for (Producto p : productos) {
+                if (p.getNombre().equals(pa.getNombre())) {
+                    p.setCantidad(p.getCantidad() + pa.getCantidad());
+                    addFlag = true;
+                    break;
+                }
+            }
+            if (!addFlag) {
+                productos.add(pa);
+            }
+        }
+    }
 }
