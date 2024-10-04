@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Exceptions.NotFoundProductoException;
+
 public class Almacen {
     private ArrayList<Producto> productos;
 
@@ -12,14 +14,13 @@ public class Almacen {
         this.productos = new ArrayList<Producto>();
     }
 
-    public Producto getProducto(String nombre) {
+    public Producto getProducto(String nombre) throws NotFoundProductoException {
         for (Producto p : productos) {
             if (p.getNombre().equals(nombre)) {
                 return p;
             }
         }
-        System.out.println("Producto no encontrado");
-        return null;
+        throw new NotFoundProductoException(nombre);
     }
 
     public static Almacen getFromDB() throws FileNotFoundException {

@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import Exceptions.NotFoundProductoException;
+import Exceptions.NotQuantityProductosException;
+
 public class TransaccionVenta extends Transaccion {
     private String id;
     private LocalDateTime fechaHora;
@@ -50,6 +53,10 @@ public class TransaccionVenta extends Transaccion {
                             addProductoVenta(nombre, cantidad);
                         } catch (NumberFormatException e) {
                             System.out.println("Error al ingresar cantidad");
+                        } catch (NotFoundProductoException e) {
+                            System.out.println("Producto no encontrado");
+                        } catch (NotQuantityProductosException e) {
+                            System.out.println("No existe suficiente cantidad del producto");
                         }
                     }
                     System.out.println("Desea agregar mas productos? (S/N)");
@@ -99,13 +106,10 @@ public class TransaccionVenta extends Transaccion {
         }
     }
 
-    private void addProductoVenta(String nombre, int cantidad) {
+    private void addProductoVenta(String nombre, int cantidad)
+            throws NotFoundProductoException, NotQuantityProductosException {
         int cantidadTransaccionTotal = 0;
         Producto prodAlmacen = getAlmacen().getProducto(nombre);
-        if (prodAlmacen.getCantidad() == 0) {
-            System.out.println("Producto no encontrado");
-            return;
-        }
         Producto prodTransaccion = getProducto(nombre);
 
         if (prodTransaccion == null) {
@@ -115,8 +119,7 @@ public class TransaccionVenta extends Transaccion {
         }
 
         if (cantidadTransaccionTotal > cantidad) {
-            System.out.println("No hay suficiente cantidad en almacen");
-            return;
+            throw new NotQuantityProductosException(nombre);
         }
         addProducto(new Producto(nombre, cantidad, prodAlmacen.getPrecio()));
     }
