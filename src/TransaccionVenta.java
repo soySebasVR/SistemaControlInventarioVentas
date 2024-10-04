@@ -72,6 +72,7 @@ public class TransaccionVenta extends Transaccion {
                 nombre = sc.nextLine();
                 cantidadString = sc.nextLine();
                 try {
+                    System.out.println("Ingrese cantidad");
                     cantidad = Integer.valueOf(cantidadString);
                     removeProducto(nombre, cantidad);
                 } catch (NumberFormatException e) {
@@ -114,17 +115,17 @@ public class TransaccionVenta extends Transaccion {
 
     private void addProductoVenta(String nombre, int cantidad)
             throws NotFoundProductoException, NotQuantityProductosException {
-        int cantidadTransaccionTotal = 0;
         Producto prodAlmacen = getAlmacen().getProducto(nombre);
         Producto prodTransaccion = getProducto(nombre);
 
+        int cantidadTransaccionTotal = 0;
         if (prodTransaccion == null) {
             cantidadTransaccionTotal = cantidad;
         } else {
             cantidadTransaccionTotal = prodTransaccion.getCantidad() + cantidad;
         }
 
-        if (cantidadTransaccionTotal > cantidad) {
+        if (cantidadTransaccionTotal > prodAlmacen.getCantidad()) {
             throw new NotQuantityProductosException(nombre);
         }
         addProducto(new Producto(nombre, cantidad, prodAlmacen.getPrecio()));
